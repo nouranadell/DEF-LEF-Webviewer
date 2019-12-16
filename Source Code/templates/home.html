@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+            <html>
+            <body>
+                <div class="header">
+                <h1> DEF/LEF to SVG</h1>
+                    </div>
+
+
+                <form method="post" action="." enctype="multipart/form-data">
+                    <p align="center"><label for="def">Enter DEF file Path:</label></p>
+                    <p><input name="def_file_path" id="def"/></p>
+                    <p align="center"><label for="lef">Enter LEF file Path:</label></p>
+                    <p><input name="lef_file_path" id="lef"/></p>
+                    <p><input type="submit" value="Turn to SVG" /></p>
+                </form>
+                <style>
+                    .header{
+                      padding: 15px;
+                      text-align: center;
+                      background: #1abc9c;
+                      color: white;
+                      font-size: 15px;
+                    }
+                p{
+                    text-align: center;
+                    font-style: italic;
+                    font-size: 20px;
+                    color: grey;
+                }
+                input {
+                  width: 40%;
+                  padding: 15px 10px;
+                  margin: 25px 400px;
+                  box-sizing: border-box;
+                }
+                input[type=submit]{
+                  background-color: #1abc9c;
+                  border: none;
+                  color: white;
+                  padding: 10px 8px;
+                    font-weight: 200px;
+                    font-size: 20px;
+                  margin: 25px 400px;
+                  cursor: pointer;
+                }
+                </style>
+
+            </body>
+
+        </html>

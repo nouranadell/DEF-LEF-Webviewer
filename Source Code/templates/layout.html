@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+ <html>
+
+                <head>
+                    <script src="/static/svg-pan-zoom.js"></script>
+                </head>
+                <body>
+                <div class="background">
+                    </div>
+                    <div id="Image" style = "position: absolute; left: 100px; top: 20px">
+                    <object id="Layout" type="image/svg+xml" data="/static/FinalLayout6.svg"
+                            style="width: 900px; height: 750px; border:1px solid black" ></object></div>
+
+                    <div id="ObjectTag" style = "position: absolute; left: 1200px; top: 20px">
+
+                    <p>Display Components' Details <input type="checkbox" id="mycheckbox" checked ="checked" onclick="DisplayComponents()"></p>
+
+                    <p>Display Metal 1 <input type="checkbox" id="Metal1checkbox" checked ="checked" onclick="DisplayMetal1()"> <input type="color" id="metal1color" value="#ff8c69" onclick="changecolorMetal1()"></p>
+                    <p>Display Metal 2 <input type="checkbox" id="Metal2checkbox" checked ="checked" onclick="DisplayMetal2()"> <input type="color" id="metal2color" value="#ffc0cb" onclick="changecolorMetal2()"></p>
+                    <p>Display Metal 3 <input type="checkbox" id="Metal3checkbox" checked ="checked" onclick="DisplayMetal3()"> <input type="color" id="metal3color" value="#00ffff" onclick="changecolorMetal3()"></p>
+                    <p>Display Metal 4 <input type="checkbox" id="Metal4checkbox" checked ="checked" onclick="DisplayMetal4()"> <input type="color" id="metal4color" value="#964b00" onclick="changecolorMetal4()"></p>
+                    <p>Display OBS <input type="checkbox" id="OBScheckbox" checked ="checked" onclick="DisplayOBS()"> </p>
+                    <p>Display Via 1 <input type="checkbox" id="Via1checkbox" checked ="checked" onclick="DisplayVia1()"> <input type="color" id="via1color" value="#de1738" onclick="changecolorVia1()"> </p>
+                    <p>Display Via 2 <input type="checkbox" id="Via2checkbox" checked ="checked" onclick="DisplayVia2()"> <input type="color" id="via2color" value="#610aa2" onclick="changecolorVia2()"> </p>
+                    <p>Display Via 3 <input type="checkbox" id="Via3checkbox" checked ="checked" onclick="DisplayVia3()"> <input type="color" id="via3color" value="#05f0ec" onclick="changecolorVia3()"> </p>
+
+                    <p>Highlighted Cell Types:
+                    <input list="cells-types-list" id="cell-type-choice" name="cell-type-choice" onchange="highlight_cell_type()" />
+                    <datalist id="cells-types-list">
+                        <option selected="selected">None</option>
+                        {% for cell_type in cell_types %}
+                        <option value= "{{cell_type}}">{{cell_type}}</option>"
+                        {% endfor %}
+                    </datalist></p>
+
+                    <p>Highlighted Cell Names:
+                    <input list="cells-list" id="cell-choice" name="cell-choice" onchange="highlight_cell()" />
+                    <datalist id="cells-list">
+                        <option selected="selected">None</option>
+                        {% for cell in cell_names %}
+                        <option value= "{{cell}}">{{cell}}</option>"
+                        {% endfor %}
+                    </datalist></p>
+
+                    <p>Pins:
+                    <input list="pins-list" id="pin-choice" name="pin-choice" onchange="highlightpins()" />
+                    <datalist id="pins-list">
+                        <option selected="selected">None</option>
+                        {% for pin in pin_names %}
+                        <option value= "{{pin}}">{{pin}}</option>"
+                        {% endfor %}
+                    </datalist></p>
+
+                    <p>Highlighted Nets:
+                    <input list="nets-list" id="net-choice" name="net-choice" onchange="highlight_net()" />
+                    <datalist id="nets-list">
+                        <option selected="selected">None</option>
+                        {% for net in net_names %}
+                        <option value= "{{net}}">{{net}}</option>"
+                        {% endfor %}
+                    </datalist></p>
+
+                    <p><a href="/">Click here to to go back</a>
+                    <p id="zz"></p>
+
+                    </div>
+                    <script>
+                        var cell_names =  {{cell_names|tojson}};
+                        var cell_types =  {{cell_types|tojson}};
+                        var old_cell_type = "zz";
+                        var old_cell = "zz";
+                        var a = document.getElementById("Layout");
+                        a.onmouseover = function() {mouseOver()};
+                        function mouseOver(){
+                            var a = document.getElementById("Layout");
+                            var svgDoc = a.contentDocument;
+                            var els = svgDoc.getElementsByTagName("*");
+                            for(i=0; i<els.length; i++){
+                                for (var j=0; j<cell_names.length; j++) {
+                                    if (els[i].id == "z" + cell_names[j] || els[i].id ==cell_names[j]) {
+                                        const name = cell_names[j]
+                                        els[i].onmouseover = function () {
+                                            document.getElementById("zz").innerText = name
+                                        };
+                                        els[i].onmouseout = function () {
+                                            document.getElementById("zz").innerHTML = ""
+                                        };
+                                    }
+                                }
+                            }
+                        }
+                        // Don't use window.onLoad like this in production, because it can only listen to one function.
+                        window.onload = function() {
+                        svgPanZoom("#Layout",{
+                            panEnabled:true,
+                            zoomEnabled: true,
+                            controlIconsEnabled:true
+                        });
+                                      };
+                        function DisplayComponents(){
+                            var checkBox = document.getElementById("mycheckbox");
+                            var a = document.getElementById("Layout");
+                            var svgDoc = a.contentDocument;
+                            var els = svgDoc.getElementsByTagName("*");
+                          if (checkBox.checked == true){
+                            for(i=0; i<cell_names.length; i++){
+                            var component= svgDoc.getElementById(cell_names[i]).children;
+                            for(j=0; j<component.length; j++)
+                            component[j].style.visibility = "visible"}
+                                          }
+                          else{
+                            for(i=0; i<cell_names.length; i++){
+                            var component= svgDoc.getElementById(cell_names[i]).children;
+                            for(j=0; j<component.length; j++)
+                            component[j].style.visibility = "hidden"}
+                          }
+                        }
+                        function highlight_cell_type(){
+                            var a = document.getElementById("Layout");
+                            var svgDoc = a.contentDocument;
+                            var els = svgDoc.getElementsByTagName("*");
+                            var chosen_cell_type = document.getElementById("cell-type-choice").value;
+                            for(i=0; i<els.length; i++){
+                                if (els[i].id == old_cell_type)
+                                    els[i].setAttribute("fill", "transparent");
+                                if (els[i].id == chosen_cell_type)
+                                    els[i].setAttribute("fill", "black")}
+                            old_cell_type = chosen_cell_type;
+                                    }
+                        function highlight_cell(){
+                            var chosen_cell = document.getElementById("cell-choice").value;
+                            var a = document.getElementById("Layout");
+                            var svgDoc = a.contentDocument;
+                            var els = svgDoc.getElementsByTagName("*");
+                            for(i=0; i<els.length; i++){
+                                if (els[i].id == old_cell)
+                                    els[i].setAttribute("fill", "transparent");
+                                if (els[i].id == "z" + chosen_cell)
+                                    els[i].setAttribute("fill", "blue")}
+                            old_cell = "z" + chosen_cell;
+                                    }
+                        function highlight_net(){
+                            var chosen_net = document.getElementById("net-choice").value;
+                            var a = document.getElementById("Layout");
+                            var svgDoc = a.contentDocument;
+                            var nets = svgDoc.getElementById(chosen_net).children;
+                            for(i=0; i<nets.length; i++){
+                                nets[i].setAttribute("stroke", "red")
+                            }
+                                    }
+                        function DisplayMetal1(){
+                                var checkBox = document.getElementById("Metal1checkbox");
+                                var a = document.getElementById("Layout");
+                                var svgDoc = a.contentDocument;
+                                var els = svgDoc.getElementsByTagName("*");
+                              if (checkBox.checked == true){
+                                  for(i=0; i<els.length; i++){
+                                    if (els[i].id == "metal1")
+                                        els[i].style.visibility = "visible";
+                             }}
+                              else
+                                  {for(i=0; i<els.length; i++){
+                                    if (els[i].id == "metal1")
+                                        els[i].style.visibility = "hidden";
+                             }}}
+                        function DisplayMetal2(){
+                                var checkBox = document.getElementById("Metal2checkbox");
+                                var a = document.getElementById("Layout");
+                                var svgDoc = a.contentDocument;
+                                var els = svgDoc.getElementsByTagName("*");
+                              if (checkBox.checked == true){
+                                  for(i=0; i<els.length; i++){
+                                    if (els[i].id == "metal2")
+                                        els[i].style.visibility = "visible";
+                             }}
+                              else
+                                  {for(i=0; i<els.length; i++){
+                                    if (els[i].id == "metal2")
+                                        els[i].style.visibility = "hidden";
+                             }}}
+                        function DisplayMetal3(){
+                                var checkBox = document.getElementById("Metal3checkbox");
+                                var a = document.getElementById("Layout");
+                                var svgDoc = a.contentDocument;
+                                var els = svgDoc.getElementsByTagName("*");
+                              if (checkBox.checked == true){
+                                  for(i=0; i<els.length; i++){
+                                    if (els[i].id == "metal3")
+                                        els[i].style.visibility = "visible";
+                             }}
+                              else
+                                  {for(i=0; i<els.length; i++){
+                                    if (els[i].id == "metal3")
+                                        els[i].style.visibility = "hidden";
+                             }}}
+                        function DisplayMetal4(){
+                                var checkBox = document.getElementById("Metal4checkbox");
+                                var a = document.getElementById("Layout");
+                                var svgDoc = a.contentDocument;
+                                var els = svgDoc.getElementsByTagName("*");
+                              if (checkBox.checked == true){
+                                  for(i=0; i<els.length; i++){
+                                    if (els[i].id == "metal4")
+                                        els[i].style.visibility = "visible";
+                             }}
+                              else
+                                  {for(i=0; i<els.length; i++){
+                                    if (els[i].id == "metal4")
+                                        els[i].style.visibility = "hidden";
+                             }}}
+                        function DisplayOBS(){
+                                var checkBox = document.getElementById("OBScheckbox");
+                                var a = document.getElementById("Layout");
+                                var svgDoc = a.contentDocument;
+                                var els = svgDoc.getElementsByTagName("*");
+                              if (checkBox.checked == true){
+                                  for(i=0; i<els.length; i++){
+                                    if (els[i].id == "OBS")
+                                        els[i].style.visibility = "visible";
+                             }}
+                              else
+                                  {for(i=0; i<els.length; i++){
+                                    if (els[i].id == "OBS")
+                                        els[i].style.visibility = "hidden";
+                             }}}
+                        function DisplayVia1(){
+                                var checkBox = document.getElementById("Via1checkbox");
+                                var a = document.getElementById("Layout");
+                                var svgDoc = a.contentDocument;
+                                var els = svgDoc.getElementsByTagName("*");
+                              if (checkBox.checked == true){
+                                  for(i=0; i<els.length; i++){
+                                    if (els[i].id == "via1")
+                                        els[i].style.visibility = "visible";
+                             }}
+                              else
+                                  {for(i=0; i<els.length; i++){
+                                    if (els[i].id == "via1")
+                                        els[i].style.visibility = "hidden";
+                             }}}
+                        function DisplayVia2(){
+                                var checkBox = document.getElementById("Via2checkbox");
+                                var a = document.getElementById("Layout");
+                                var svgDoc = a.contentDocument;
+                                var els = svgDoc.getElementsByTagName("*");
+                              if (checkBox.checked == true){
+                                  for(i=0; i<els.length; i++){
+                                    if (els[i].id == "via2")
+                                        els[i].style.visibility = "visible";
+                             }}
+                              else
+                                  {for(i=0; i<els.length; i++){
+                                    if (els[i].id == "via2")
+                                        els[i].style.visibility = "hidden";
+                             }}}
+                        function DisplayVia3(){
+                                var checkBox = document.getElementById("Via3checkbox");
+                                var a = document.getElementById("Layout");
+                                var svgDoc = a.contentDocument;
+                                var els = svgDoc.getElementsByTagName("*");
+                              if (checkBox.checked == true){
+                                  for(i=0; i<els.length; i++){
+                                    if (els[i].id == "via3")
+                                        els[i].style.visibility = "visible";
+                             }}
+                              else
+                                  {for(i=0; i<els.length; i++){
+                                    if (els[i].id == "via3")
+                                        els[i].style.visibility = "hidden";
+                             }}}
+                        function changecolorMetal1(){
+                            var color= document.getElementById("metal1color");
+                            var a = document.getElementById("Layout");
+                            var svgDoc = a.contentDocument;
+                            var els = svgDoc.getElementsByTagName("*");
+                              for(i=0; i<els.length; i++){
+                                if (els[i].id == "metal1"){
+                                    els[i].setAttribute("fill", color.value);
+                                    els[i].setAttribute("stroke", color.value);}
+                                }
+                        }
+                        function changecolorMetal2(){
+                            var color= document.getElementById("metal2color");
+                            var a = document.getElementById("Layout");
+                            var svgDoc = a.contentDocument;
+                            var els = svgDoc.getElementsByTagName("*");
+                              for(i=0; i<els.length; i++){
+                                if (els[i].id == "metal2"){
+                                    els[i].setAttribute("fill", color.value);
+                                    els[i].setAttribute("stroke", color.value);}
+                                }
+                        }
+                        function changecolorMetal3(){
+                            var color= document.getElementById("metal3color");
+                            var a = document.getElementById("Layout");
+                            var svgDoc = a.contentDocument;
+                            var els = svgDoc.getElementsByTagName("*");
+                              for(i=0; i<els.length; i++){
+                                if (els[i].id == "metal3"){
+                                    els[i].setAttribute("fill", color.value);
+                                    els[i].setAttribute("stroke", color.value);}
+                                }
+                        }
+                        function changecolorMetal4(){
+                            var color= document.getElementById("metal4color");
+                            var a = document.getElementById("Layout");
+                            var svgDoc = a.contentDocument;
+                            var els = svgDoc.getElementsByTagName("*");
+                              for(i=0; i<els.length; i++){
+                                if (els[i].id == "metal4"){
+                                    els[i].setAttribute("fill", color.value);
+                                    els[i].setAttribute("stroke", color.value);}
+                                }
+                        }
+                        function changecolorVia1(){
+                            var color= document.getElementById("via1color");
+                            var a = document.getElementById("Layout");
+                            var svgDoc = a.contentDocument;
+                            var els = svgDoc.getElementsByTagName("*");
+                              for(i=0; i<els.length; i++){
+                                if (els[i].id == "via1"){
+                                    els[i].setAttribute("fill", color.value);
+                                    els[i].setAttribute("stroke", color.value);}
+                                }
+                        }
+                        function changecolorVia2(){
+                            var color= document.getElementById("via2color");
+                            var a = document.getElementById("Layout");
+                            var svgDoc = a.contentDocument;
+                            var els = svgDoc.getElementsByTagName("*");
+                              for(i=0; i<els.length; i++){
+                                if (els[i].id == "via2"){
+                                    els[i].setAttribute("fill", color.value);
+                                    els[i].setAttribute("stroke", color.value);}
+                                }
+                        }
+                        function changecolorVia3(){
+                            var color= document.getElementById("via3color");
+                            var a = document.getElementById("Layout");
+                            var svgDoc = a.contentDocument;
+                            var els = svgDoc.getElementsByTagName("*");
+                              for(i=0; i<els.length; i++){
+                                if (els[i].id == "via3"){
+                                    els[i].setAttribute("fill", color.value);
+                                    els[i].setAttribute("stroke", color.value);}
+                                }
+                        }
+                    </script>
+                    <style>
+                         .background{
+                            width:1680px;
+                            height:856px;
+                            background: linear-gradient(to right, whitesmoke 70%, #1abc9c 30%);
+                        }
+                         p{
+                    font-style: italic;
+                    font-size: 15px;
+                    color: white;
+                }
+                         input[type=checkbox]{
+                         /* Double-sized Checkboxes */
+                      -ms-transform: scale(1); /* IE */
+                      -moz-transform: scale(1); /* FF */
+                      -webkit-transform: scale(1); /* Safari and Chrome */
+                      -o-transform: scale(1); /* Opera */
+                      transform: scale(1);
+                      padding: 20px;
+                }
+                    </style>
+                </body>
+</html>
