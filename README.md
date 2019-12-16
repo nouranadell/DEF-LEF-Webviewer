@@ -1,4 +1,4 @@
-# DEF-LEF Webviewer
+# DEF/LEF Webviewer
 
 ## Description:<br/>
 This project is part of the Digital Design2 Course in The American Uinversity in Cairo that converts DEF and LEF files to a corresponding Layout in SVG format.
