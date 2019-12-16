@@ -4,14 +4,15 @@
 This project is part of the Digital Design2 Course in The American University in Cairo that converts DEF and LEF files to a corresponding Layout in SVG format.
 This is a web application that receives the DEF and LEF file paths and displays the SVG output in the webviewer. 
 
-## Webviewer Features: <br/>
+## Webviewer Implemented Features: <br/>
 • Zooming and Panning<br/>
 • Hiding/Showing cell components and layers of Metals and vias<br/>
-• A searchable list of all Nets where you can search and highlight<br/>
-• A searchablelist of all Cells where you can search and highlight <br/>
-• A searchablelist of all Pins where you can search and highlight<br/>
-• Display the cell name when you hover over the cell<br/>
-• Changing colours of Metals and vias<br/>
+•A searchable list of all Nets where you can highlight<br/>
+•A searchable list of all Cell Names where you can highlight cells by name <br/>
+•A searchable list of all Cell Types where you can highlight cells by type <br/>
+•A searchable list of all Pins where you can highlight<br/>
+•Display the cell name when you hover over the cell<br/>
+•Changing colours of Metals and vias<br/>
 
 ### Languages and Frameworks:<br/>
 • Python<br/>
