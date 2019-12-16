@@ -7,12 +7,12 @@ This is a web application that receives the DEF and LEF file paths and displays 
 ## Webviewer Implemented Features: <br/>
 • Zooming and Panning<br/>
 • Hiding/Showing cell components and layers of Metals and vias<br/>
-•A searchable list of all Nets where you can highlight<br/>
-•A searchable list of all Cell Names where you can highlight cells by name <br/>
-•A searchable list of all Cell Types where you can highlight cells by type <br/>
-•A searchable list of all Pins where you can highlight<br/>
-•Display the cell name when you hover over the cell<br/>
-•Changing colours of Metals and vias<br/>
+• A searchable list of all Nets where you can highlight<br/>
+• A searchable list of all Cell Names where you can highlight cells by name <br/>
+• A searchable list of all Cell Types where you can highlight cells by type <br/>
+• A searchable list of all Pins where you can highlight<br/>
+• Display the cell name when you hover over the cell<br/>
+• Changing colours of Metals and vias<br/>
 
 ### Languages and Frameworks:<br/>
 • Python<br/>
