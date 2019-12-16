@@ -1,7 +1,7 @@
 # DEF/LEF Webviewer
 
 ## Description:<br/>
-This project is part of the Digital Design2 Course in The American Uinversity in Cairo that converts DEF and LEF files to a corresponding Layout in SVG format.
+This project is part of the Digital Design2 Course in The American University in Cairo that converts DEF and LEF files to a corresponding Layout in SVG format.
 This is a web application that receives the DEF and LEF file paths and displays the SVG output in the webviewer. 
 
 ## Webviewer Implemented Features: <br/>
