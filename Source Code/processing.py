@@ -2,9 +2,10 @@ import drawSvg as draw
 from def_parser import *
 from lef_parser import *
 import re
+import os.path
 
 
-def process(def_file, lef_file):
+def process(def_file, lef_file, drc_path):
     # Parse the DEF file
     # read_path = def_path
     def_parser = DefParser(def_file)
@@ -14,6 +15,40 @@ def process(def_file, lef_file):
     # path = lef_path
     lef_parser = LefParser(lef_file)
     lef_parser.parse()
+
+    DRC_Data = []
+    if os.path.exists(drc_path):
+        with open(drc_path, 'r') as f:
+            DRC_Data = f.read().split()
+            print(DRC_Data)
+        f.close()
+
+    violations_point1 = []
+    violations_point2 = []
+    violations_types = []
+    violations_sources = []
+    violations_layers = []
+
+    for i in range(0, len(DRC_Data)):
+        if DRC_Data[i] == "bbox":
+            violations_point1.append(DRC_Data[i + 2] + DRC_Data[i + 3])
+            violations_point2.append(DRC_Data[i + 5] + DRC_Data[i + 6])
+        if DRC_Data[i] == "type:":
+            violations_types.append(DRC_Data[i + 1])
+        if DRC_Data[i] == "srcs:":
+            pointer = i + 1
+            src = ""
+            while DRC_Data[pointer] != "bbox":
+                src = src + " " + DRC_Data[pointer]
+                pointer = pointer + 1
+            violations_sources.append(src)
+        if DRC_Data[i] == "Layer":
+            violations_layers.append(DRC_Data[i + 1])
+    print(violations_point1)
+    print(violations_point2)
+    print(violations_types)
+    print(violations_sources)
+    print(violations_layers)
 
     # Parsing the LEF outputs the data into LEF_Parsed.txt which is saved in the variable named file
     # file.close()
