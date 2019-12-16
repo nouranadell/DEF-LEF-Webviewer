@@ -22,13 +22,13 @@ This is a web application that receives the DEF and LEF file paths and displays 
 • Javascript<br/>
 
 ### How to build and run:<br/>
-•Clone repository and choose the path where you want to download the repo.
-•Open the downloaded folder using Pycharm 
-•Configure python interpreter to python 3.7
-•Import Libraries: Flask, Matplotlib, drawSvg
-•Add configuration - choose flask server - target type and choose app.py as your target
-•Run program and open in local host
-•Provide DEF, LEF and DRC (optionally) file paths respectively in the Home screen
+•Clone repository and choose the path where you want to download the repo.<br/>
+•Open the downloaded folder using Pycharm <br/>
+•Configure python interpreter to python 3.7 <br/>
+•Import Libraries: Flask, Matplotlib, drawSvg <br/>
+•Add configuration - choose flask server - target type and choose app.py as your target <br/>
+•Run program and open in local host <br/>
+•Provide DEF, LEF and DRC (optionally) file paths respectively in the Home screen <br/>
 
 
 
