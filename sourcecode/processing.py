@@ -375,7 +375,7 @@ def process(def_file, lef_file, drc_path):
                                 stroke_width=1, stroke='black', id=layer_used))
         d.append(draw.Text(pin_name, 30, 1000 + x - Global_X, -(Die_Height + 1000 - (y - Global_Y)), center='origin'))
 
-    d.saveSvg('./static/FinalLayout14.svg')
+    d.saveSvg('./sourcecode/static/FinalLayout14.svg')
 
     d  # Display as SVG
     print("The layout is now saved in Layout.svg")
