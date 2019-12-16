@@ -21,6 +21,17 @@ This is a web application that receives the DEF and LEF file paths and displays 
 • CSS<br/>
 • Javascript<br/>
 
+### How to build and run:<br/>
+•Clone repository and choose the path where you want to download the repo.
+•Open the downloaded folder using Pycharm 
+•Configure python interpreter to python 3.7
+•Import Libraries: Flask, Matplotlib, drawSvg
+•Add configuration - choose flask server - target type and choose app.py as your target
+•Run program and open in local host
+•Provide DEF, LEF and DRC (optionally) file paths respectively in the Home screen
+
+
+
 ### References:<br/>
 https://github.com/ariutta/svg-pan-zoom<br/>
 https://github.com/trimcao/lef-parser
